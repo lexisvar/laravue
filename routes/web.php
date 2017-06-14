@@ -4,7 +4,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('dashboard');
-});
+Route::get('inicio', 'AdminController@index');
+Route::get('clientes', 'AdminController@clientes');
+Route::post('clientes', 'AdminController@actualizar');
+Route::get('departamentos/{pais_id}', 'AdminController@departamentos');
 
