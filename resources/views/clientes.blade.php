@@ -3,7 +3,6 @@
 <link href="{{ asset('public/css/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('public/css/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('public/css/assets/global/plugins/bootstrap-toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" >
-<link href="{{ asset('public/css/assets/global/css/fakeLoader.css') }}" rel="stylesheet" type="text/css" >
 <!-- END PAGE LEVEL PLUGINS -->
 
 @include('partials.header')
@@ -77,8 +76,9 @@
                                     <td> {{$cliente->cupo}} </td>
                                     <td> {{$cliente->saldo_cupo}} </td>
                                     <td> {{$cliente->porcentaje_visita}} </td>
-                                    <td> Editar </td>
-                                    <td> Eliminar </td>
+                                    <td> <a href="javascript:void(0)" id="btn_editar" id_customer="{{$cliente->cliente_id}}"><i class="fa fa-edit"></i></a> </td>
+                                    <td> <a href="javascript:void(0)" id="btn_eliminar" id_customer="{{$cliente->cliente_id}}"><i class="fa fa-trash"></i></a> </td>
+
                                 </tr>
                             @endforeach
                             </tbody>
@@ -191,7 +191,7 @@
                                         </div>
 
                                     </form>
-                                    <div id="fakeLoader"></div>
+
                                 </div>
                                 <div class="modal-footer">
                                     <button id="add_customer_btn" type="submit" class="btn btn-circle green">Guardar</button>
@@ -226,9 +226,10 @@
 
 <script src="{{ asset('public/css/assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript" ></script>
 <script src="{{ asset('public/css/assets/global/scripts/ui-modals.min.js') }}" type="text/javascript" ></script>
-<script src="{{ asset('public/js/fakeLoader.min.js') }}" type="text/javascript" ></script>
 
-
+<script src="{{ asset('public/css/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript" ></script>
+<script src="{{ asset('public/css/assets/global/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js') }}" type="text/javascript" ></script>
+<script src="{{ asset('public/css/assets/global/scripts/form-input-mask.min.js') }}" type="text/javascript" ></script>
 
 <script src="{{ asset('public/js/custom.js') }}" type="text/javascript" ></script>
 <!-- END PAGE LEVEL PLUGINS -->

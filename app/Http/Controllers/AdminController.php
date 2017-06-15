@@ -27,7 +27,7 @@ class AdminController extends Controller
             $this->validate($request, [
                 'nit' => 'required',
                 'nombre' => 'required',
-                'telefono' => 'required|numeric',
+                'telefono' => 'required|numeric|digits_between:7,13',
                 'cupo' => 'required|numeric',
                 'saldo_cupo' => 'required|numeric',
                 'porcentaje_visita' => 'required|numeric|min:0|max:100',
@@ -40,11 +40,13 @@ class AdminController extends Controller
                 'saldo_cupo.required'=>'El campo saldo_cupo no puede estar vacío',
                 'porcentaje_visita.required'=>'El campo porcentaje_visita no puede estar vacío',
                 'telefono.numeric'=>'El campo telefono debe ser numérico',
+                'telefono.digits_between'=>'El campo telefono debe tener entre 7 a 13 dígitos',
                 'cupo.numeric'=>'El campo cupo debe ser numérico',
                 'ciudad_id.numeric'=>'El campo ciudad_id no puede estar vacío',
                 'porcentaje_visita.numeric'=>'El campo porcentaje_visita, debe ser numérico',
                 'porcentaje_visita.min'=>'El mínimo permitido para el campo porcentaje_visita es 0',
                 'porcentaje_visita.max'=>'El máximo permitido para el campo porcentaje_visita es 100',
+
             ]);
 
             $cliente = new Clientes;
@@ -58,7 +60,8 @@ class AdminController extends Controller
             $cliente->ciudad_id = $request->input('ciudad_id');
 
             if($cliente->save()){
-                return json_encode(array('success'=>true,'message'=>'Registro Éxitoso'));
+                $data['clientes'] = Clientes::get_all()->toArray();
+                return json_encode(array('success'=>true,'message'=>'Registro Éxitoso','clientes'=>$data['clientes'],));
             }else{
                 return json_encode(array('success'=>false,'message'=>'Registro No Éxitoso'));
             }

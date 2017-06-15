@@ -1,7 +1,6 @@
 
 // Guardar Cliente
 $('#add_customer_btn').click(function () {
-    $("#fakeloader").fakeLoader();
 
     var formData = {
         nit: $("input[name$='nit']").val(),
@@ -37,22 +36,43 @@ $('#add_customer_btn').click(function () {
         data: formData,
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             toastr.success("Registro Éxitoso", "Solicitud éxitosa")
+            $('#sample_1 tbody').empty();
+            $.each(data.clientes, function(key, cliente) {
+                $('#sample_1 tbody').append(`
+                    <tr>
+                        <td> `+cliente.nit+` </td>
+                        <td> `+cliente.nombre+` </td>
+                        <td> `+cliente.direccion+` </td>
+                        <td> `+cliente.telefono+` </td>
+                        <td> `+cliente.ciudad_nombre+` </td>
+                        <td> `+cliente.cupo+` </td>
+                        <td> `+cliente.saldo_cupo+` </td>
+                        <td> `+cliente.porcentaje_visita+` </td>
+                        <td> Editar </td>
+                        <td> Eliminar </td>
+                    </tr>
+                `);
+            });
+            $('#add_customer').modal('hide');
         },
         error: function (data) {
             var errores = data.responseJSON;
-
-
             var mensajes_error = '';
             $.each(errores, function(key, error) {
                 mensajes_error += "*" + error + "</br>";
             });
-
             toastr.error(mensajes_error, "Hubo un error")
         }
     });
 });
+
+//Eliminar Cliente
+$('#btn_eliminar').click(function(){
+    alert(this.attr('id_customer'));
+    console.log('hello');
+});
+
 
 //Traer departamentos
 $('#pais').on('change',function(){
@@ -78,7 +98,6 @@ $('#pais').on('change',function(){
                 .append('<option value="0" selected="selected">-- Ciudad --</option>')
                 .val('0');
             $.each(result, function(key, departamento) {
-                console.log(departamento);
                 $('#departamento').append($("<option></option>").attr("value",departamento.departamento_id).text(departamento.nombre));
             });
         },
