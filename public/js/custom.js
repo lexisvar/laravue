@@ -29,16 +29,17 @@ $('#add_customer_btn').click(function () {
     });
 });
 
-//Traer ciudades
+//Traer departamentos
 $('#pais').on('change',function(){
     pais_id = this.value;
-    console.log(pais_id);
+
     $.ajax({
         url: 'departamentos/'+pais_id,
         cache: false,
         dataType: 'json',
         success: function (result) {
             a=1;
+
             $('#departamento')
                 .find('option')
                 .remove()
@@ -51,11 +52,36 @@ $('#pais').on('change',function(){
                 .end()
                 .append('<option value="0" selected="selected">-- Ciudad --</option>')
                 .val('0');
-            $.each(result, function(key, state) {
-
-                $('#departamento').append($("<option></option>").attr("value",state.id).text(state.name));
+            $.each(result, function(key, departamento) {
+                console.log(departamento);
+                $('#departamento').append($("<option></option>").attr("value",departamento.departamento_id).text(departamento.nombre));
             });
         },
         error: 'error',
+    });
+});
+
+//traer ciudades
+$('#departamento').on('change',function(){
+
+    departamento_id = this.value;
+
+    $.ajax({
+        url: "ciudad/"+departamento_id,
+        cache: false,
+        dataType: 'json',
+        success: function (result) {
+            $('#city')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="0" selected="selected">-- Ciudad --</option>')
+                .val('0');
+            $.each(result, function(key, city) {
+
+                $('#city').append($("<option></option>").attr("value",city.id).text(city.name));
+            });
+        },
+        error: ajax_error_handling
     });
 });
