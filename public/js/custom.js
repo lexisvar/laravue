@@ -7,11 +7,26 @@ $('#add_customer_btn').click(function () {
         nombre: $("input[name$='nombre']").val(),
         direccion: $("input[name$='direccion']").val(),
         telefono: $("input[name$='telefono']").val(),
-        ciudad: $("input[name$='ciudad']").val(),
         cupo: $("input[name$='cupo']").val(),
         saldo_cupo: $("input[name$='saldo_cupo']").val(),
         porcentaje_visita: $("input[name$='porcentaje_visita']").val(),
+        ciudad_id: $("#ciudad").val(),
         _token: $("input[name$='_token']").val(),
+    }
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-right",
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
     }
 
     $.ajax({
@@ -22,9 +37,18 @@ $('#add_customer_btn').click(function () {
         dataType: 'json',
         success: function (data) {
             console.log(data);
+            toastr.success("Registro Éxitoso", "Solicitud éxitosa")
         },
         error: function (data) {
-            console.log('Error:', data);
+            var errores = data.responseJSON;
+
+
+            var mensajes_error = '';
+            $.each(errores, function(key, error) {
+                mensajes_error += "*" + error + "</br>";
+            });
+
+            toastr.error(mensajes_error, "Hubo un error")
         }
     });
 });
@@ -67,21 +91,21 @@ $('#departamento').on('change',function(){
     departamento_id = this.value;
 
     $.ajax({
-        url: "ciudad/"+departamento_id,
+        url: "ciudades/"+departamento_id,
         cache: false,
         dataType: 'json',
         success: function (result) {
-            $('#city')
+            $('#ciudad')
                 .find('option')
                 .remove()
                 .end()
                 .append('<option value="0" selected="selected">-- Ciudad --</option>')
                 .val('0');
-            $.each(result, function(key, city) {
+            $.each(result, function(key, ciudad) {
 
-                $('#city').append($("<option></option>").attr("value",city.id).text(city.name));
+                $('#ciudad').append($("<option></option>").attr("value",ciudad.ciudad_id).text(ciudad.nombre));
             });
         },
-        error: ajax_error_handling
+        error: 'error',
     });
 });

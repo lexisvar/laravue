@@ -2,6 +2,7 @@
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <link href="{{ asset('public/css/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('public/css/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" >
+<link href="{{ asset('public/css/assets/global/plugins/bootstrap-toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" >
 <!-- END PAGE LEVEL PLUGINS -->
 
 @include('partials.header')
@@ -145,11 +146,8 @@
                                                 <label class="col-md-3 control-label">Región</label>
                                                 <div class="col-md-8">
                                                     <select class="form-control " name="departamento" id="departamento">
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
-                                                        <option>Option 3</option>
-                                                        <option>Option 4</option>
-                                                        <option>Option 5</option>
+                                                        <option>-- Departamento --</option>
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -157,11 +155,8 @@
                                                 <label class="col-md-3 control-label">Ciudad</label>
                                                 <div class="col-md-8">
                                                     <select class="form-control " name="ciudad" id="ciudad">
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
-                                                        <option>Option 3</option>
-                                                        <option>Option 4</option>
-                                                        <option>Option 5</option>
+                                                        <option>-- Ciudad --</option>
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -224,9 +219,16 @@
 <script src="{{ asset('public/css/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript" ></script>
 <script src="{{ asset('public/css/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript" ></script>
 
+<script src="{{ asset('public/css/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript" ></script>
+
 <script src="{{ asset('public/css/assets/global/scripts/table-datatables-buttons.min.js') }}" type="text/javascript" ></script>
+<script src="{{ asset('public/css/assets/global/scripts/ui-toastr.min.js') }}" type="text/javascript" ></script>
 
 <script src="{{ asset('public/css/assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript" ></script>
 <script src="{{ asset('public/css/assets/global/scripts/ui-modals.min.js') }}" type="text/javascript" ></script>
+
+
+
+
 <script src="{{ asset('public/js/custom.js') }}" type="text/javascript" ></script>
 <!-- END PAGE LEVEL PLUGINS -->
