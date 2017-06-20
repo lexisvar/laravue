@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Clientes extends Model
 {
     protected $table = 'banshee_cliente';
+    protected $primaryKey = 'cliente_id';
 
     public static function get_all(){
         $clientes = DB::table('banshee_cliente')

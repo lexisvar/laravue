@@ -34,6 +34,14 @@
 <script src="{{ asset('public/css/assets/global/layouts/layout/scripts/demo.min.js') }}" type="text/javascript" ></script>
 <script src="{{ asset('public/css/assets/global/layouts/layout/scripts/quick-sidebar.min.js') }}" type="text/javascript" ></script>
 <!-- END THEME LAYOUT SCRIPTS -->
+
+<!-- ANGULAR -->
+<script src="{{ asset('angular/app.js') }}"></script>
+<script src="{{ asset('angular/angular-route.min.js') }}"></script>
+<script src="{{ asset('angular/ngMask.min.js') }}"></script>
+<script src="{{ asset('angular//controllers/ClienteController.js') }}"></script>
+<!-- END ANGULAR -->
+
 </body>
 
 </html>

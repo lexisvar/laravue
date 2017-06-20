@@ -19,7 +19,7 @@ class AdminController extends Controller
     function clientes(){
         $data['clientes'] = Clientes::get_all()->toArray();
         $data['paises'] = Clientes::get_countries()->toArray();
-        return view('clientes',$data);
+        return $data;
     }
     function actualizar(Request $request){
         if ($request->isMethod('post')) {
@@ -83,6 +83,12 @@ class AdminController extends Controller
         }else{
             echo 'error';
         }
+    }
+
+    public function eliminar($cliente_id)
+    {
+        $cliente = Clientes::find($cliente_id)->delete();
+        return 'El cliente fue eliminado éxitosamente';
     }
 
 }

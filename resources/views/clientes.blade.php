@@ -12,7 +12,7 @@
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->
-    <div class="page-content">
+    <div class="page-content" ng-app="AngularApp" ng-controller="ClienteController">
 
         <!-- BEGIN PAGE TITLE-->
         <h3 class="page-title"> Clientes
@@ -66,21 +66,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($clientes as $cliente)
-                                <tr>
-                                    <td> {{$cliente->nit}} </td>
-                                    <td> {{$cliente->nombre}} </td>
-                                    <td> {{$cliente->direccion}} </td>
-                                    <td> {{$cliente->telefono}} </td>
-                                    <td> {{$cliente->ciudad_nombre}} </td>
-                                    <td> {{$cliente->cupo}} </td>
-                                    <td> {{$cliente->saldo_cupo}} </td>
-                                    <td> {{$cliente->porcentaje_visita}} </td>
-                                    <td> <a href="javascript:void(0)" id="btn_editar" id_customer="{{$cliente->cliente_id}}"><i class="fa fa-edit"></i></a> </td>
-                                    <td> <a href="javascript:void(0)" id="btn_eliminar" id_customer="{{$cliente->cliente_id}}"><i class="fa fa-trash"></i></a> </td>
+                                <tr ng-repeat=" cliente in clientes.clientes">
+                                    <td> @{{cliente.nit}} </td>
+                                    <td> @{{cliente.nombre}} </td>
+                                    <td> @{{cliente.direccion}} </td>
+                                    <td> @{{cliente.telefono}} </td>
+                                    <td> @{{cliente.ciudad_nombre}} </td>
+                                    <td> @{{cliente.cupo}} </td>
+                                    <td> @{{cliente.saldo_cupo}} </td>
+                                    <td> @{{cliente.porcentaje_visita}} </td>
+
+                                    <td> <a href="javascript:void(0)" id="btn_editar" id_customer=""><i class="fa fa-edit"></i></a> </td>
+                                    <td> <a href="javascript:void(0)" id="btn_eliminar" ng-click="confirmDelete(cliente.cliente_id)"><i class="fa fa-trash"></i></a> </td>
 
                                 </tr>
-                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -137,9 +136,9 @@
                                                 <label class="col-md-3 control-label">País</label>
                                                 <div class="col-md-8">
                                                     <select class="form-control" name="pais" id="pais">
-                                                        @foreach($paises as $pais)
-                                                            <option value="{{$pais->pais_id}}">{{$pais->nombre}}</option>
-                                                        @endforeach
+
+                                                            <option ng-repeat=" pais in clientes.paises" value="@{{pais.pais_id}}">@{{pais.nombre}}</option>
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -160,7 +159,7 @@
 
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Cupo</label>
                                                 <div class="col-md-8">
