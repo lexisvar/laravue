@@ -82,4 +82,21 @@ app.controller('ClienteController', function ($scope,$http, API_URL) {
             return false;
         }
     }
+
+
+    //Traer departamentos
+    $scope.getStates = function () {
+        pais_id = $scope.selectedItem;
+        $http.get(API_URL + 'departamentos/'+ pais_id).success(function(data){
+            $scope.departamentos = data;
+        });
+    }
+
+    //Traer ciudades
+    $scope.getCities = function () {
+        departamento_id = $scope.selectedItemDepartamento;
+        $http.get(API_URL + 'ciudades/'+ departamento_id).success(function(data){
+            $scope.ciudades = data;
+        });
+    }
 });

@@ -96,15 +96,16 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <form action="#" class="form-horizontal">
+                                    <form name="frmCliente" class="form-horizontal" novalidate="">
                                         <div class="form-body">
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Nit</label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon">
                                                         <i class="fa fa-info-circle"></i>
-                                                        <input type="text" class="form-control " placeholder="Nit" name="nit"></div>
-                                                    <span class="help-block"> Información encriptada. </span>
+                                                        <input mask="999.999.999-9" clean="true" name="cliente_nit" type="text" class="form-control" id="cliente_nit" value="@{{cliente.cliente_nit}}" ng-model="cliente.cliente_nit" ng-required="true" value="@{{ cliente.cliente_nit }}">
+
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -112,7 +113,9 @@
                                                 <div class="col-md-8">
                                                     <div class="input-icon">
                                                         <i class="fa fa-user"></i>
-                                                        <input type="text" class="form-control " placeholder="Nombre" name="nombre"></div>
+                                                        <input name="cliente_nombre" placeholder="Nombre" type="text" class="form-control" id="cliente_nombre" value="@{{cliente.cliente_nombre}}" ng-model="cliente.cliente_nombre" ng-required="true" value="@{{ cliente.cliente_nombre }}">
+                                                        <span ng-show="frmCliente.cliente_nombre.$invalid && frmCliente.cliente_nombre.$touched">El campo Nombre es requerido</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -135,28 +138,27 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">País</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" name="pais" id="pais">
-
+                                                    <select class="form-control" name="pais" id="pais" ng-model="selectedItem" ng-change="getStates();">
+                                                            <option value=""> -- País --</option>
                                                             <option ng-repeat=" pais in clientes.paises" value="@{{pais.pais_id}}">@{{pais.nombre}}</option>
-
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Región</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control " name="departamento" id="departamento">
-                                                        <option>-- Departamento --</option>
-
+                                                    <select class="form-control" name="departamento" id="departamento" ng-model="selectedItemDepartamento" ng-change="getCities();">
+                                                        <option value="">-- Departamento --</option>
+                                                        <option ng-repeat=" departamento in departamentos" ng-value="@{{departamento.departamento_id}}">@{{departamento.nombre}}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Ciudad</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control " name="ciudad" id="ciudad">
-                                                        <option>-- Ciudad --</option>
-
+                                                    <select class="form-control" name="ciudad" id="ciudad" ng-model="selectedItemCiudad">
+                                                        <option value="">-- Ciudad --</option>
+                                                        <option ng-repeat=" ciudad in ciudades" ng-value="@{{ciudad.ciudad_id}}">@{{ciudad.nombre}}</option>
                                                     </select>
                                                 </div>
                                             </div> -->
