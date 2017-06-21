@@ -1,6 +1,6 @@
 
 // Guardar Cliente
-$('#add_customer_btn').click(function () {
+$('#dd_customer_btn').click(function () {
 
     var formData = {
         nit: $("input[name$='nit']").val(),

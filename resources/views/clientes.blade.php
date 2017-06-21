@@ -43,7 +43,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="btn-group">
-                                        <button id="sample_editable_1_new" class="btn green sbold" data-toggle="modal" href="#add_customer"> Agregar Cliente
+                                        <button id="" class="btn green sbold" ng-click="toggle('add', 0 )" href="#add_customer"> Agregar Cliente
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
@@ -53,6 +53,7 @@
                         <table class="table table-striped table-bordered table-hover" id="sample_1">
                             <thead>
                             <tr>
+                                <th> ID </th>
                                 <th> Nit </th>
                                 <th> Nombre </th>
                                 <th> Dirección </th>
@@ -67,6 +68,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat=" cliente in clientes.clientes">
+                                    <td> @{{cliente.cliente_id}} </td>
                                     <td> @{{cliente.nit}} </td>
                                     <td> @{{cliente.nombre}} </td>
                                     <td> @{{cliente.direccion}} </td>
@@ -76,7 +78,7 @@
                                     <td> @{{cliente.saldo_cupo}} </td>
                                     <td> @{{cliente.porcentaje_visita}} </td>
 
-                                    <td> <a href="javascript:void(0)" id="btn_editar" id_customer=""><i class="fa fa-edit"></i></a> </td>
+                                    <td> <a href="javascript:void(0)" ng-click="toggle('edit', cliente.cliente_id )" id="btn_editar" id_customer=""><i class="fa fa-edit"></i></a> </td>
                                     <td> <a href="javascript:void(0)" id="btn_eliminar" ng-click="confirmDelete(cliente.cliente_id)"><i class="fa fa-trash"></i></a> </td>
 
                                 </tr>
@@ -87,12 +89,12 @@
                 <!-- END EXAMPLE TABLE PORTLET-->
 
                 <!-- BEGIN MODAL -->
-                    <div class="modal fade" id="add_customer" tabindex="-1" role="basic" aria-hidden="true">
+                    <div id="myModal" class="modal fade" id="add_customer" tabindex="-1" role="basic" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                    <h4 class="modal-title">Agregar Cliente</h4>
+                                    <h4 class="modal-title">@{{form_title}}</h4>
                                 </div>
                                 <div class="modal-body">
 
@@ -103,7 +105,7 @@
                                                 <div class="col-md-8">
                                                     <div class="input-icon">
                                                         <i class="fa fa-info-circle"></i>
-                                                        <input mask="999.999.999-9" clean="true" name="cliente_nit" type="text" class="form-control" id="cliente_nit" value="@{{cliente.cliente_nit}}" ng-model="cliente.cliente_nit" ng-required="true" value="@{{ cliente.cliente_nit }}">
+                                                        <input mask="999.999.999-9" clean="true" name="cliente_nit" ng-model="cliente.nit" type="text" class="form-control" id="cliente_nit" value="@{{cliente.nit}}" ng-model="cliente.cliente_nit" ng-required="true" >
 
                                                     </div>
                                                 </div>
@@ -113,7 +115,7 @@
                                                 <div class="col-md-8">
                                                     <div class="input-icon">
                                                         <i class="fa fa-user"></i>
-                                                        <input name="cliente_nombre" placeholder="Nombre" type="text" class="form-control" id="cliente_nombre" value="@{{cliente.cliente_nombre}}" ng-model="cliente.cliente_nombre" ng-required="true" value="@{{ cliente.cliente_nombre }}">
+                                                        <input name="cliente_nombre" placeholder="Nombre" type="text" ng-model="cliente.nombre" class="form-control" id="cliente_nombre" value="@{{cliente.nombre}}" ng-model="cliente.cliente_nombre" ng-required="true" >
                                                         <span ng-show="frmCliente.cliente_nombre.$invalid && frmCliente.cliente_nombre.$touched">El campo Nombre es requerido</span>
                                                     </div>
                                                 </div>
@@ -123,7 +125,7 @@
                                                 <div class="col-md-8">
                                                     <div class="input-icon">
                                                         <i class="fa fa-location-arrow"></i>
-                                                        <input type="text" class="form-control " placeholder="Dirección" name="direccion"></div>
+                                                        <input type="text" class="form-control " placeholder="Dirección" ng-model="cliente.direccion" name="direccion"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -131,15 +133,16 @@
                                                 <div class="col-md-8">
                                                     <div class="input-icon">
                                                         <i class="fa fa-phone"></i>
-                                                        <input type="text" class="form-control " placeholder="Teléfono" name="telefono"></div>
+                                                        <input mask="+(999) 999-99" clean="true" type="text" class="form-control " placeholder="Teléfono" ng-model="cliente.telefono" name="telefono"></div>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">País</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" name="pais" id="pais" ng-model="selectedItem" ng-change="getStates();">
-                                                            <option value=""> -- País --</option>
+                                                    <select class="form-control" name="pais" id="pais" ng-model="cliente.pais" ng-change="getStates();">
+                                                            <option value="" selected> -- País --</option>
+                                                            <option ng-if="cliente.pais_nombre" value="" selected>@{{ cliente.pais_nombre }}</option>
                                                             <option ng-repeat=" pais in clientes.paises" value="@{{pais.pais_id}}">@{{pais.nombre}}</option>
                                                     </select>
                                                 </div>
@@ -147,8 +150,9 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Región</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" name="departamento" id="departamento" ng-model="selectedItemDepartamento" ng-change="getCities();">
-                                                        <option value="">-- Departamento --</option>
+                                                    <select class="form-control" name="departamento" id="departamento" ng-model="cliente.departamento" ng-change="getCities();">
+                                                        <option value="" selected>-- Departamento --</option>
+                                                        <option ng-if="cliente.departamento_nombre" value="" selected>@{{ cliente.departamento_nombre }}</option>
                                                         <option ng-repeat=" departamento in departamentos" ng-value="@{{departamento.departamento_id}}">@{{departamento.nombre}}</option>
                                                     </select>
                                                 </div>
@@ -156,18 +160,19 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Ciudad</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" name="ciudad" id="ciudad" ng-model="selectedItemCiudad">
-                                                        <option value="">-- Ciudad --</option>
+                                                    <select class="form-control" name="ciudad_id" id="ciudad" ng-model="cliente.ciudad_id">
+                                                        <option value="" selected> -- Ciudad -- </option>
+                                                        <option ng-if="cliente.ciudad_nombre" value="" selected>@{{ cliente.ciudad_nombre }}</option>
                                                         <option ng-repeat=" ciudad in ciudades" ng-value="@{{ciudad.ciudad_id}}">@{{ciudad.nombre}}</option>
                                                     </select>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">Cupo</label>
                                                 <div class="col-md-8">
                                                     <div class="input-icon">
                                                         <i class="fa fa-dollar"></i>
-                                                        <input type="text" class="form-control " placeholder="Cupo" name="cupo"></div>
+                                                        <input type="text" class="form-control " placeholder="Cupo" ng-model="cliente.cupo" name="cupo"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -175,7 +180,7 @@
                                                 <div class="col-md-8">
                                                     <div class="input-icon">
                                                         <i class="fa fa-money"></i>
-                                                        <input type="text" class="form-control " placeholder="Saldo Cupo" name="saldo_cupo"></div>
+                                                        <input type="text" class="form-control " placeholder="Saldo Cupo" ng-model="cliente.saldo_cupo" name="saldo_cupo"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -183,7 +188,7 @@
                                                 <div class="col-md-8">
                                                     <div class="input-icon">
                                                         <i class="fa fa-hourglass-start"></i>
-                                                        <input type="text" class="form-control " placeholder="Porcentaje Visita" name="porcentaje_visita"></div>
+                                                        <input mask="999"  type="text" class="form-control " placeholder="Porcentaje Visita" ng-model="cliente.porcentaje_visita" name="porcentaje_visita"></div>
                                                 </div>
                                                 {!! csrf_field() !!}
                                             </div>
@@ -195,7 +200,7 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button id="add_customer_btn" type="submit" class="btn btn-circle green">Guardar</button>
+                                    <button id="add_customer_btn" ng-click="save(modalestado,cliente_id)" class="btn btn-circle green">Guardar</button>
                                     <button type="button" class="btn btn-circle grey-salsa btn-outline" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>

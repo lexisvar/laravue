@@ -14,7 +14,8 @@ class Clientes extends Model
     public static function get_all(){
         $clientes = DB::table('banshee_cliente')
             ->leftjoin('banshee_ciudad', 'banshee_ciudad.ciudad_id', '=', 'banshee_cliente.ciudad_id')
-            ->select('*','banshee_ciudad.nombre as ciudad_nombre','banshee_cliente.nombre as nombre')
+            ->leftjoin('banshee_departamento', 'banshee_departamento.departamento_id', '=', 'banshee_ciudad.ciudad_id')
+            ->select('*','banshee_ciudad.nombre as ciudad_nombre','banshee_cliente.nombre as nombre','banshee_departamento.nombre as departamento_nombre')
             ->get();
 
         return  $clientes;
@@ -34,5 +35,17 @@ class Clientes extends Model
             ->get();
 
         return  $departamentos;
+    }
+
+    public static function get_client($cliente_id){
+        $cliente = DB::table('banshee_cliente')
+            ->leftjoin('banshee_ciudad', 'banshee_ciudad.ciudad_id', '=', 'banshee_cliente.ciudad_id')
+            ->leftjoin('banshee_departamento', 'banshee_departamento.departamento_id', '=', 'banshee_ciudad.ciudad_id')
+            ->leftjoin('banshee_pais', 'banshee_pais.pais_id', '=', 'banshee_departamento.pais_id')
+            ->select('*','banshee_ciudad.nombre as ciudad_nombre','banshee_cliente.nombre as nombre','banshee_departamento.nombre as departamento_nombre','banshee_pais.nombre as pais_nombre')
+            ->where('cliente_id',$cliente_id)
+            ->first();
+
+        return  $cliente;
     }
 }
