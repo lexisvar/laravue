@@ -43,7 +43,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('crud', 'crud'),
+            'database' => env('laravue', 'laravue'),
             'username' => env('root', 'root'),
             'password' => env('', ''),
             'charset' => 'utf8mb4',

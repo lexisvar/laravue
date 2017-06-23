@@ -12,7 +12,7 @@
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->
-    <div class="page-content" ng-app="AngularApp" ng-controller="ClienteController">
+    <div class="page-content" ng-app="AngularApp" ng-controller="ClienteController" >
 
         <!-- BEGIN PAGE TITLE-->
         <h3 class="page-title"> Clientes
@@ -24,6 +24,7 @@
             <div class="col-md-12">
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                 <div class="portlet light portlet-fit bordered">
+
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="icon-settings font-red"></i>
@@ -50,40 +51,50 @@
                                 </di>
                             </div>
                         </div>
-                        <table class="table table-striped table-bordered table-hover" id="sample_1">
-                            <thead>
-                            <tr>
-                                <th> ID </th>
-                                <th> Nit </th>
-                                <th> Nombre </th>
-                                <th> Dirección </th>
-                                <th> Teléfono </th>
-                                <th> Ciudad </th>
-                                <th> Cupo </th>
-                                <th> Saldo Cupo </th>
-                                <th> Porcetaje Visita </th>
-                                <th> Editar </th>
-                                <th> Eliminar </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat=" cliente in clientes.clientes">
-                                    <td> @{{cliente.cliente_id}} </td>
-                                    <td> @{{cliente.nit}} </td>
-                                    <td> @{{cliente.nombre}} </td>
-                                    <td> @{{cliente.direccion}} </td>
-                                    <td> @{{cliente.telefono}} </td>
-                                    <td> @{{cliente.ciudad_nombre}} </td>
-                                    <td> @{{cliente.cupo}} </td>
-                                    <td> @{{cliente.saldo_cupo}} </td>
-                                    <td> @{{cliente.porcentaje_visita}} </td>
+                        @if(Config::get('app.frameworkjs')=='angular')
+                                <table class="table table-striped table-bordered table-hover" id="sample_1">
+                                    <thead>
+                                        <tr>
+                                            <th> ID </th>
+                                            <th> Nit </th>
+                                            <th> Nombre </th>
+                                            <th> Dirección </th>
+                                            <th> Teléfono </th>
+                                            <th> Ciudad </th>
+                                            <th> Cupo </th>
+                                            <th> Saldo Cupo </th>
+                                            <th> Porcetaje Visita </th>
+                                            <th> Editar </th>
+                                            <th> Eliminar </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat=" cliente in clientes.clientes">
+                                            <td> @{{cliente.cliente_id}} </td>
+                                            <td> @{{cliente.nit}} </td>
+                                            <td> @{{cliente.nombre}} </td>
+                                            <td> @{{cliente.direccion}} </td>
+                                            <td> @{{cliente.telefono}} </td>
+                                            <td> @{{cliente.ciudad_nombre}} </td>
+                                            <td> @{{cliente.cupo}} </td>
+                                            <td> @{{cliente.saldo_cupo}} </td>
+                                            <td> @{{cliente.porcentaje_visita}} </td>
 
-                                    <td> <a href="javascript:void(0)" ng-click="toggle('edit', cliente.cliente_id )" id="btn_editar" id_customer=""><i class="fa fa-edit"></i></a> </td>
-                                    <td> <a href="javascript:void(0)" id="btn_eliminar" ng-click="confirmDelete(cliente.cliente_id)"><i class="fa fa-trash"></i></a> </td>
+                                            <td> <a href="javascript:void(0)" ng-click="toggle('edit', cliente.cliente_id )" id="btn_editar" id_customer=""><i class="fa fa-edit"></i></a> </td>
+                                            <td> <a href="javascript:void(0)" id="btn_eliminar" ng-click="confirmDelete(cliente.cliente_id)"><i class="fa fa-trash"></i></a> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        @elseif(Config::get('app.frameworkjs')=='vue')
+                            <div id="app_vue">
+                                <Clientes></Clientes>
+                                <table id="example" class="display" width="100%"></table>
+                            </div>
+                        @else
+                            Por favor revise su archivo de configuración
+                        @endif
 
-                                </tr>
-                            </tbody>
-                        </table>
+
                     </div>
                 </div>
                 <!-- END EXAMPLE TABLE PORTLET-->
@@ -230,7 +241,13 @@
 <script src="{{ asset('public/css/assets/global/scripts/table-datatables-buttons.min.js') }}" type="text/javascript" ></script>
 <script src="{{ asset('public/css/assets/global/scripts/ui-toastr.min.js') }}" type="text/javascript" ></script>
 
+<!-- PUBLIC / APP.JS -->
+<script src="{{ asset('public/js/app.js') }}"></script>
+<!-- END APP.JS -->
+<script src="{{ asset('public/css/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript" ></script>
+
 <script src="{{ asset('public/css/assets/global/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript" ></script>
+
 <script src="{{ asset('public/css/assets/global/scripts/ui-modals.min.js') }}" type="text/javascript" ></script>
 
 <script src="{{ asset('public/css/assets/global/plugins/jquery.input-ip-address-control-1.0.min.js') }}" type="text/javascript" ></script>
@@ -239,3 +256,4 @@
 
 <script src="{{ asset('public/js/custom.js') }}" type="text/javascript" ></script>
 <!-- END PAGE LEVEL PLUGINS -->
+

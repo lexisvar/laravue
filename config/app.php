@@ -228,4 +228,6 @@ return [
 
     ],
 
+    'frameworkjs' => 'vue',
+
 ];

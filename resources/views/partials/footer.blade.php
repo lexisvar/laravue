@@ -15,12 +15,15 @@
 
 
 <![endif]-->
+
+
 <!-- BEGIN CORE PLUGINS -->
 <script src="{{ asset('public/css/assets/global/plugins/jquery.min.js') }}" type="text/javascript" ></script>
+
 <script src="{{ asset('public/css/assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript" ></script>
 <script src="{{ asset('public/css/assets/global/plugins/js.cookie.min.js') }}" type="text/javascript" ></script>
 <script src="{{ asset('public/css/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') }}" type="text/javascript" ></script>
-<script src="{{ asset('public/css/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript" ></script>
+
 <script src="{{ asset('public/css/assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript" ></script>
 <script src="{{ asset('public/css/assets/global/plugins/uniform/jquery.uniform.min.js') }}" type="text/javascript" ></script>
 <script src="{{ asset('public/css/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}" type="text/javascript" ></script>
@@ -35,12 +38,16 @@
 <script src="{{ asset('public/css/assets/global/layouts/layout/scripts/quick-sidebar.min.js') }}" type="text/javascript" ></script>
 <!-- END THEME LAYOUT SCRIPTS -->
 
+<!-- COMMENT THE SCRIPTS OF ANGULAR OF VUE -->
+
 <!-- ANGULAR -->
 <script src="{{ asset('angular/app.js') }}"></script>
 <script src="{{ asset('angular/angular-route.min.js') }}"></script>
 <script src="{{ asset('angular/ngMask.min.js') }}"></script>
 <script src="{{ asset('angular//controllers/ClienteController.js') }}"></script>
 <!-- END ANGULAR -->
+
+
 
 </body>
 
