@@ -27,11 +27,12 @@
                 <td> {{cliente.saldo_cupo}} </td>
                 <td> {{cliente.porcentaje_visita}} </td>
 
-                <td> <a href="javascript:void(0)"  id="btn_editar" ><i class="fa fa-edit"></i></a> </td>
+                <td> <a href="javascript:void(0)"  id="btn_editar" v-on:click="$parent.toggle('edit',cliente.cliente_id)"><i class="fa fa-edit"></i></a> </td>
                 <td> <a href="javascript:void(0)" id="btn_eliminar" v-on:click="confirmDelete(cliente.cliente_id)"><i class="fa fa-trash"></i></a> </td>
             </tr>
         </tbody>
     </table>
+
 </template>
 
 <script>
@@ -56,7 +57,7 @@
         data(){
             return {
                 clientes: {},
-
+                paises: {}
             }
         },
         created(){
@@ -69,7 +70,8 @@
             fetchClientes: function(){
                 axios.get('/clientes').then(response => {
                     this.clientes = response.data.clientes;
-                    console.log(this.clientes);
+                    this.paises = response.data.paises;
+                    this.$parent.paises = this.paises;
                 }, response => {
                     // error callback
                 });

@@ -1,6 +1,6 @@
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
-    <div class="page-footer-inner"> 2017 &copy; by Handy Commerce.
+    <div class="page-footer-inner"> 2017 &copy by Handy Commerce.
         <a href="http://handycommerce.com.co" title="Vísitanos" target="_blank">Vísitanos!</a>
     </div>
     <div class="scroll-to-top">
@@ -44,7 +44,7 @@
 <script src="{{ asset('angular/app.js') }}"></script>
 <script src="{{ asset('angular/angular-route.min.js') }}"></script>
 <script src="{{ asset('angular/ngMask.min.js') }}"></script>
-<script src="{{ asset('angular//controllers/ClienteController.js') }}"></script>
+<script src="{{ asset('angular/controllers/ClienteController.js') }}"></script>
 <!-- END ANGULAR -->
 
 
