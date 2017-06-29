@@ -8,10 +8,14 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-var Inputmask = require('inputmask');
 
 import Clientes from './components/Clientes.vue';
+import vSelect from 'vue-select'
+import money from 'v-money'
+import VueTheMask from 'vue-the-mask'
+Vue.use(VueTheMask, {value:true})
 
+Vue.use(money, {precision: 2,decimal:",",thousands:".",prefix : "$"})
 
 
 var app = new Vue({
@@ -23,15 +27,20 @@ var app = new Vue({
             cliente : {},
             modalestado : '',
             cliente_id : '',
-            paises : {},
-            departamentos : {},
-            ciudades : {}
-
-
+            paises : [],
+            pais_nombre:'',
+            departamentos : [],
+            departamento_nombre:'',
+            ciudades : [],
+            ciudad_nombre:'',
+            departamento_id:'',
+            ciudad_id : '',
+            selected: null
         }
     },
     components: {
         'clientes' : Clientes,
+        'v-select' : vSelect
     },
     methods : {
         toggle : function (modalestado, cliente_id) {
@@ -41,6 +50,9 @@ var app = new Vue({
                 case 'add' :
                     this.form_title = "Agregar cliente";
                     this.cliente = {};
+                    this.pais_nombre = '';
+                    this.departamentos = [];
+                    this.ciudades = [];
                     break;
                 case 'edit' :
                     this.form_title = "Detalle del Cliente";
@@ -49,8 +61,15 @@ var app = new Vue({
                     axios.get('/cliente/'+cliente_id ).then(response => {
 
                         this.cliente = response.data;
+                        var clientes = app.$refs.profile;
+                        this.paises = clientes.paises;
+                        this.ciudad_nombre = this.cliente.ciudad_nombre;
+                        this.pais_nombre = this.cliente.pais_nombre;
+                        this.departamento_nombre = this.cliente.departamento_nombre;
+                        this.departamento_id = this.cliente.departamento_id;
+                        this.getCiudades(this.departamento_id);
                         this.getDepartamentos(this.cliente.pais_id);
-                        this.getCiudades(this.cliente.departamento_id);
+
                     }, response => {
                         // error callback
                     });
@@ -66,6 +85,14 @@ var app = new Vue({
             if(modalestado === 'edit'){
                 url += "/" +cliente_id;
             }
+            if(typeof(this.cliente.ciudad_nombre)=='object'){
+
+                this.cliente.ciudad_id = this.cliente.ciudad_nombre.ciudad_id;
+                this.cliente.ciudad_departamento_id = this.cliente.ciudad_nombre.departamento_id;
+                this.cliente.ciudad_nombre.ciudad_nombre = this.cliente.ciudad_nombre.ciudad_nombre;
+            }
+
+            console.log(this.cliente);
             axios.post(url, this.cliente ).then(response => {
                 toastr.success(response.data.message, "Solicitud éxitosa");
                 var clientes = app.$refs.profile;
@@ -74,7 +101,6 @@ var app = new Vue({
                 $('#myModal').modal('hide');
             })
             .catch(function (error) {
-                console.log(error.response);
                 var errors = error.response.data;
                 var error_messages = '';
 
@@ -85,23 +111,44 @@ var app = new Vue({
                 toastr.error(error_messages, "Solicitud no éxitosa");
             });
         },
-        getDepartamentos : function (pais_id) {
-            this.departamentos = {};
+        getDepartamentos : function (pais) {
+
+            var pais_id = '';
+            if(typeof(pais)=='object'){
+                pais_id = pais.pais_id;
+                this.ciudades = [];
+                this.ciudad_nombre='';
+            }else{
+                pais_id = pais;
+            }
             axios.get('/departamentos/' + pais_id).then(response => {
+
                this.departamentos = response.data;
 
             }, response => {
 
             });
         },
-        getCiudades : function (departamento_id) {
+        getCiudades : function (departamento) {
+            console.log(departamento);
+            var departamento_id = '';
+            if(typeof(departamento)=='object'){
+                departamento_id = departamento.departamento_id;
+                this.ciudades = [];
+                this.ciudad_nombre='';
+            }else{
+                departamento_id = departamento;
+            }
 
-            this.ciudades={};
-            axios.get('/ciudades/' + departamento_id).then(response => {
-                this.ciudades = response.data;
-            }, response => {
+            if(departamento_id){
+                axios.get('/ciudades/' + departamento_id).then(response => {
+                    this.ciudades = response.data;
 
-            });
+                }, response => {
+
+                });
+            }
+
         },
     }
 });

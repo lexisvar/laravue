@@ -40,15 +40,15 @@
 
 <!-- COMMENT THE SCRIPTS OF ANGULAR OF VUE -->
 
-<!-- ANGULAR -->
-<script src="{{ asset('angular/app.js') }}"></script>
-<script src="{{ asset('angular/angular-route.min.js') }}"></script>
-<script src="{{ asset('angular/ngMask.min.js') }}"></script>
-<script src="{{ asset('angular/controllers/ClienteController.js') }}"></script>
-<!-- END ANGULAR -->
-
-
-
+@if(Config::get('app.frameworkjs')=='angular')
+    <!-- ANGULAR -->
+    <script src="https://code.angularjs.org/1.5.7/angular.min.js"></script>
+    <script src="{{ asset('angular/app.js') }}"></script>
+    <script src="{{ asset('angular/angular-route.min.js') }}"></script>
+    <script src="{{ asset('angular/ngMask.min.js') }}"></script>
+    <script src="{{ asset('angular/controllers/ClienteController.js') }}"></script>
+    <!-- END ANGULAR -->
+@endif
 </body>
 
 </html>

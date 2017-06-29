@@ -57,7 +57,7 @@
         data(){
             return {
                 clientes: {},
-                paises: {}
+                paises: []
             }
         },
         created(){
